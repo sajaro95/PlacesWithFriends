@@ -1,0 +1,11 @@
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\bin\Debug\netcoreapp1.1\PWF.API.deps.json
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\bin\Debug\netcoreapp1.1\PWF.API.runtimeconfig.json
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\bin\Debug\netcoreapp1.1\PWF.API.runtimeconfig.dev.json
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\bin\Debug\netcoreapp1.1\PWF.API.dll
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\bin\Debug\netcoreapp1.1\PWF.API.pdb
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\obj\Debug\netcoreapp1.1\PWF.API.csprojResolveAssemblyReference.cache
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\obj\Debug\netcoreapp1.1\PWF.API.csproj.CoreCompileInputs.cache
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\obj\Debug\netcoreapp1.1\PWF.API.AssemblyInfoInputs.cache
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\obj\Debug\netcoreapp1.1\PWF.API.AssemblyInfo.cs
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\obj\Debug\netcoreapp1.1\PWF.API.dll
+C:\Projects\PlacesWithFriends\src\API\PWF_API\PWF.API\obj\Debug\netcoreapp1.1\PWF.API.pdb
