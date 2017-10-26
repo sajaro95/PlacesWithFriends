@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PWF.Model\PWF.Model.csproj" />
+    <ProjectReference Include="..\PWF.Resource\PWF.Resource.csproj" />
+  </ItemGroup>
+
+</Project>

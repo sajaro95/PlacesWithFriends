@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PWF.Model
 {
-    public class Buddy
+    public class Buddy : BaseModel
     {
-        public int Id { get; set; }
+        public int BuddyUserId { get; set; }
+        public int MainUserId { get; set; }
 
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User BuddyUser { get; set; }
+        public virtual User MainUser { get; set; }
     }
 }

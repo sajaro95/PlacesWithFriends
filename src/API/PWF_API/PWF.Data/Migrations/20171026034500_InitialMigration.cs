@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System;
+using System.Collections.Generic;
 
 namespace PWF.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,11 @@ namespace PWF.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,28 +28,35 @@ namespace PWF.Data.Migrations
                 name: "Buddies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false)
+                    MainUserId = table.Column<int>(type: "int", nullable: false),
+                    BuddyUserId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buddies", x => x.Id);
+                    table.PrimaryKey("PK_Buddies", x => new { x.MainUserId, x.BuddyUserId });
                     table.ForeignKey(
-                        name: "FK_Buddies_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Buddies_Users_BuddyUserId",
+                        column: x => x.BuddyUserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Buddies_Users_MainUserId",
+                        column: x => x.MainUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false)
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,9 +73,14 @@ namespace PWF.Data.Migrations
                 name: "Locations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PostId = table.Column<int>(nullable: false)
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    PostalCode = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,9 +94,9 @@ namespace PWF.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Buddies_UserId",
+                name: "IX_Buddies_BuddyUserId",
                 table: "Buddies",
-                column: "UserId");
+                column: "BuddyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_PostId",

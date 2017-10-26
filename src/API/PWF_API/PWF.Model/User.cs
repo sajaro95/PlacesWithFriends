@@ -1,12 +1,15 @@
-﻿
-namespace PWF.Model
+﻿namespace PWF.Model
 {
     using System.Collections.Generic;
 
-    public class User
+    public class User : BaseModel
     {
-        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
         public IEnumerable<Post> Posts { get; set; }
-        public IEnumerable<Buddy> Buddies { get; set; }
+        
+        public virtual ICollection<Buddy> Buddies { get; set; }
+        public virtual ICollection<Buddy> MainUserBuddies { get; set; }
     }
 }

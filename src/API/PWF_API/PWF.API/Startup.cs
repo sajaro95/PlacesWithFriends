@@ -1,36 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.EntityFrameworkCore;
-using PWF.Data.Context;
-
-namespace PWF.API
+﻿namespace PWF.API
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Swashbuckle.AspNetCore.Swagger;
+    using PWF.Data.Context;
+    using Autofac;
+    using System;
+    using Autofac.Extensions.DependencyInjection;
+    using PWF.Data.UnitOfWork;
+
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public IContainer ApplicationContainer { get; private set; }
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
             services.AddMvc();
             services.AddSwaggerGen(c =>
             {
@@ -38,14 +31,32 @@ namespace PWF.API
             });
 
             var connection = Configuration["ConnectionStrings:SQLServer:PWF"];
-            services.AddDbContext<PWFContext>(options => options.UseSqlServer(connection));
+
+            // Create the container builder.
+            var builder = new ContainerBuilder();
+
+            // Add services to autofac.
+            builder.Populate(services);
+
+            // Add custom registrations
+            builder.RegisterInstance<IConfiguration>(Configuration);
+            builder.Register(s => PWFContextFactory.Create(connection)).As<IPWFContext>();
+
+            // Add repositories
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+
+            this.ApplicationContainer = builder.Build();
+
+            return new AutofacServiceProvider(this.ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseMvc();
 

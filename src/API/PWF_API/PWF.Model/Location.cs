@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PWF.Model
+﻿namespace PWF.Model
 {
-    public class Location
+    public class Location : BaseModel
     {
-        public int Id { get; set; }
+        public string LocationName { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int PostalCode { get; set; }
 
+        // Navigation Properties
         public int PostId { get; set; }
         public Post Post { get; set; }
     }
