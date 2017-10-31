@@ -64,7 +64,7 @@
             return _dbSet.Find(id);
         }
 
-        public void Isnert(TEntity entity)
+        public void Insert(TEntity entity)
         {
             _dbSet.Add(entity);
         }

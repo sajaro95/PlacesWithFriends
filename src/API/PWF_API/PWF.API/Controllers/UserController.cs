@@ -36,7 +36,7 @@
         [HttpPost]
         public HttpResponseMessage Create(UserRequest request)
         {
-            _unitOfWork.UserRepository.Isnert(request.MapNewUserToModel());
+            _unitOfWork.UserRepository.Insert(request.MapNewUserToModel());
             _unitOfWork.Save();
             return new HttpResponseMessage(HttpStatusCode.OK);
         }

@@ -10,6 +10,7 @@
     {
         private IPWFContext _context;
         private IGenericRepository<User> userRepository;
+        private IBuddyRepository buddyRepository;
 
         public UnitOfWork(IPWFContext context)
         {
@@ -25,6 +26,18 @@
                     this.userRepository = new GenericRepository<User>(_context);
                 }
                 return userRepository;
+            }
+        }
+
+        public IBuddyRepository BuddyRepository
+        {
+            get
+            {
+                if (this.buddyRepository == null)
+                {
+                    this.buddyRepository = new BuddyRepository(_context);
+                }
+                return buddyRepository;
             }
         }
 

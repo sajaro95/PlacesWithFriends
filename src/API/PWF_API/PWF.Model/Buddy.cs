@@ -2,7 +2,7 @@
 
 namespace PWF.Model
 {
-    public class Buddy : BaseModel
+    public class Buddy
     {
         public int BuddyUserId { get; set; }
         public int MainUserId { get; set; }
