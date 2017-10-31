@@ -6,7 +6,7 @@
 
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<User> UserRepository { get; }
+        IUserRepository UserRepository { get; }
         IBuddyRepository BuddyRepository { get; }
         void Save();
     }

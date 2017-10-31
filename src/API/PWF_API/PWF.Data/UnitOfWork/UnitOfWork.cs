@@ -9,7 +9,7 @@
     public class UnitOfWork : IUnitOfWork
     {
         private IPWFContext _context;
-        private IGenericRepository<User> userRepository;
+        private IUserRepository userRepository;
         private IBuddyRepository buddyRepository;
 
         public UnitOfWork(IPWFContext context)
@@ -17,13 +17,13 @@
             _context = context;
         }
 
-        public IGenericRepository<User> UserRepository
+        public IUserRepository UserRepository
         {
             get
             {
                 if (this.userRepository == null)
                 {
-                    this.userRepository = new GenericRepository<User>(_context);
+                    this.userRepository = new UserRepository(_context);
                 }
                 return userRepository;
             }

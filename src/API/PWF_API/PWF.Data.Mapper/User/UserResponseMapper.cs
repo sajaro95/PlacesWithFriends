@@ -1,6 +1,7 @@
 ﻿namespace PWF.Data.Mapper.User
 {
     using Model;
+    using PWF.Resource.Response.Buddy;
     using PWF.Resource.Response.User;
     using System.Collections.Generic;
 
@@ -13,7 +14,8 @@
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email
+                Email = user.Email,
+                Buddies = user.MainUserBuddies.MapToBuddyResponse()
             };
         }
 
@@ -26,5 +28,25 @@
             }
             return responses;
         }
+
+        #region Private Response Mappers
+        private static IEnumerable<BuddyResponse> MapToBuddyResponse(this IEnumerable<Buddy> buddies)
+        {
+            if (buddies != null)
+            {
+                var responses = new List<BuddyResponse>();
+                foreach (var buddy in buddies)
+                {
+                    responses.Add(new BuddyResponse
+                    {
+                        MainUserId = buddy.MainUserId,
+                        BuddyUserId = buddy.BuddyUserId
+                    });
+                }
+                return responses;
+            }
+            else return null;
+        }
+        #endregion
     }
 }

@@ -30,7 +30,7 @@
         [HttpGet("{id}")]
         public UserResponse Get(int id)
         {
-            return _unitOfWork.UserRepository.GetById(id).MapToUserResponse();
+            return _unitOfWork.UserRepository.Get(id).MapToUserResponse();
         }
         
         [HttpPost]
